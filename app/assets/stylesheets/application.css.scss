@@ -13,3 +13,33 @@
  *= require_tree .
  *= require_self
  */
+
+// Colors
+
+$red: #FF596A;
+$orange: #FF9C59;
+$yellow: #FFEE59;
+$green: #59FF9C;
+$blue: #59BDFF;
+$violet: #9C59FF;
+
+// Utilities
+
+.container {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+// Site-wide styles
+
+body {
+  margin: 0;
+  font-family: Avenir, Helvetica, sans-serif;
+}
+
+.main-header {
+  position: fixed;
+  width: 100%;
+  background: $blue;
+  color: #fff;
+}
