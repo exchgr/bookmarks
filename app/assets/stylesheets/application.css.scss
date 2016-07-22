@@ -10,32 +10,12 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
  */
 
-// Colors
-
-$black: #333;
-$red: #FF596A;
-$orange: #FF9C59;
-$yellow: #FFEE59;
-$green: #59FF9C;
-$blue: #59BDFF;
-$violet: #9C59FF;
-
-$dark-red: darken($red, 25%);
-$dark-orange: darken($orange, 25%);
-$dark-yellow: darken($yellow, 25%);
-$dark-green: darken($green, 25%);
-$dark-blue: darken($blue, 25%);
-$dark-violet: darken($violet, 25%);
-
-// Variables
-
-$header-height: 5em;
-
 // Utilities
+
+@import "variables";
 
 .container {
   margin: 0 auto;
@@ -98,6 +78,11 @@ $header-height: 5em;
   &.button-violet {
     @include button-background($violet);
   }
+}
+
+.right {
+  float: right;
+  clear: right;
 }
 
 // Site-wide styles
