@@ -1,1 +1,12 @@
-
+<div class="container">
+  <% if @bookmarks.empty? %>
+    <div class="bookmarks-index empty">
+      <p>
+        You have no bookmarks saved!
+      </p>
+      <p>
+        <%= link_to "Add bookmark", "#", class: :button %>
+      </p>
+    </div>
+  <% end %>
+</div>

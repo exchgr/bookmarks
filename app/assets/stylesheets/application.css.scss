@@ -23,6 +23,10 @@ $green: #59FF9C;
 $blue: #59BDFF;
 $violet: #9C59FF;
 
+// Variables
+
+$header-height: 5em;
+
 // Utilities
 
 .container {
@@ -30,16 +34,59 @@ $violet: #9C59FF;
   max-width: 800px;
 }
 
+.button {
+  padding: .25em .5em;
+  border-radius: .5em;
+  text-decoration: none;
+  font-weight: bold;
+
+  background: $blue;
+  color: #FFF;
+
+  transition: background-color .125s;
+
+  &:hover {
+    background: lighten($blue, 10%);
+  }
+
+  &:active {
+    background: darken($blue, 5%);
+  }
+}
+
 // Site-wide styles
 
 body {
   margin: 0;
+
   font-family: Avenir, Helvetica, sans-serif;
+}
+
+.content {
+  padding-top: $header-height + 1em;
 }
 
 .main-header {
   position: fixed;
+  box-sizing: border-box;
+
+  padding: 1em 0;
+
   width: 100%;
+  height: $header-height;
+
   background: $blue;
-  color: #fff;
+  color: #FFF;
+
+  .container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    height: 100%
+  }
+
+  h1 {
+    margin: 0;
+  }
 }
