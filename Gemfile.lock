@@ -1,3 +1,16 @@
+GIT
+  remote: git://github.com/reactjs/react-rails.git
+  revision: d854ff96c81c0b85e8d3570e1fae0fa0e3f44e21
+  ref: d854ff9
+  specs:
+    react-rails (1.8.0)
+      babel-transpiler (>= 0.7.0)
+      coffee-script-source (~> 1.8)
+      connection_pool
+      execjs
+      railties (>= 3.2)
+      tilt
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -40,6 +53,10 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.4.0)
     arel (7.1.0)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     builder (3.2.2)
     byebug (9.0.5)
     coffee-rails (4.2.1)
@@ -50,6 +67,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
+    connection_pool (2.2.0)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
@@ -184,6 +202,7 @@ DEPENDENCIES
   listen (~> 3.0.5)
   puma (~> 3.0)
   rails (~> 5.0.0)
+  react-rails!
   rspec-rails (~> 3.5.0)
   sass-rails (~> 5.0)
   spring

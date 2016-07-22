@@ -1,3 +1,9 @@
-<li>
-  <%= link_to bookmark.title, bookmark.url %>
-</li>
+<%= react_component(
+  "Bookmark",
+  {
+    title: bookmark.title,
+    url: bookmark.url
+  }, {
+    prerender: true
+  })
+%>
