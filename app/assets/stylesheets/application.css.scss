@@ -34,23 +34,53 @@ $header-height: 5em;
   max-width: 800px;
 }
 
+@mixin button-background($background) {
+  background: $background;
+
+  &:hover {
+    background: lighten($background, 5%);
+  }
+
+  &:active {
+    background: darken($background, 5%);
+  }
+}
+
 .button {
   padding: .25em .5em;
   border-radius: .5em;
   text-decoration: none;
   font-weight: bold;
 
-  background: $blue;
   color: #FFF;
 
   transition: background-color .125s;
 
-  &:hover {
-    background: lighten($blue, 10%);
+  // Default color
+  @include button-background($blue);
+
+  &.button-red {
+    @include button-background($red);
   }
 
-  &:active {
-    background: darken($blue, 5%);
+  &.button-orange {
+    @include button-background($orange);
+  }
+
+  &.button-yellow {
+    @include button-background($yellow);
+  }
+
+  &.button-green {
+    @include button-background(darken($green, 25%));
+  }
+
+  &.button-blue {
+    @include button-background($blue);
+  }
+
+  &.button-violet {
+    @include button-background($violet);
   }
 }
 
