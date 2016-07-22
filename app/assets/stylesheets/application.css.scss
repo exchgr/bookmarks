@@ -50,6 +50,8 @@
 
   transition: background-color .125s;
 
+  cursor: pointer;
+
   // Default color
   @include button-background($blue);
 
@@ -103,6 +105,14 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+a {
+  text-decoration: none;
+
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
+}
+
 .content {
   padding-top: $header-height + 1em;
 }
@@ -129,6 +139,10 @@ h1, h2, h3, h4, h5, h6 {
 
   h1 {
     margin: 0;
+
+    a {
+      color: inherit;
+    }
   }
 }
 
