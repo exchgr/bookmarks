@@ -55,10 +55,15 @@ $header-height: 5em;
 }
 
 .button {
+  -webkit-appearance: none;
+
+  margin: 0;
   padding: .25em .5em;
   border-radius: .5em;
+
   text-decoration: none;
   font-weight: bold;
+  font-size: inherit;
 
   color: #FFF;
 
@@ -66,6 +71,8 @@ $header-height: 5em;
 
   // Default color
   @include button-background($blue);
+
+  border: 0;
 
   &.button-red {
     @include button-background($red);
@@ -100,6 +107,14 @@ body {
   font-family: Avenir, Helvetica, sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
 .content {
   padding-top: $header-height + 1em;
 }
@@ -126,5 +141,23 @@ body {
 
   h1 {
     margin: 0;
+  }
+}
+
+form {
+  display: inline-block;
+
+  label {
+    display: inline-block;
+    width: 3em;
+  }
+
+  input[type="text"] {
+    margin: 0;
+    font-size: inherit;
+  }
+
+  input[type="submit"] {
+    float: right;
   }
 }

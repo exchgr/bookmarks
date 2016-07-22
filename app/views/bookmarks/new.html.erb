@@ -1,0 +1,19 @@
+<div class="container">
+  <h2>Add a bookmark</h2>
+
+  <%= form_for @bookmark do |f| %>
+    <p>
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </p>
+
+    <p>
+      <%= f.label :url, "URL" %>
+      <%= f.text_field :url %>
+    </p>
+
+    <p>
+      <%= f.submit "Save", class: "button button-green" %>
+    </p>
+  <% end %>
+</div>
