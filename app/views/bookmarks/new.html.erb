@@ -5,11 +5,17 @@
     <p>
       <%= f.label :title %>
       <%= f.text_field :title %>
+
+      <%= render "application/form/errors",
+        errors: @bookmark.errors.messages[:title] %>
     </p>
 
     <p>
       <%= f.label :url, "URL" %>
       <%= f.text_field :url %>
+
+      <%= render "application/form/errors",
+        errors: @bookmark.errors.messages[:url] %>
     </p>
 
     <p>

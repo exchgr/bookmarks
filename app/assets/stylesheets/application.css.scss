@@ -16,6 +16,7 @@
 
 // Colors
 
+$black: #333;
 $red: #FF596A;
 $orange: #FF9C59;
 $yellow: #FFEE59;
@@ -105,6 +106,8 @@ body {
   margin: 0;
 
   font-family: Avenir, Helvetica, sans-serif;
+
+  color: $black;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -155,9 +158,24 @@ form {
   input[type="text"] {
     margin: 0;
     font-size: inherit;
+
+    border: 1px solid $black;
   }
 
   input[type="submit"] {
     float: right;
+  }
+
+  .field_with_errors {
+    display: inline;
+
+    input[type="text"] {
+      border: 1px solid $red;
+    }
+  }
+
+  .error {
+    text-align: right;
+    color: $red;
   }
 }
