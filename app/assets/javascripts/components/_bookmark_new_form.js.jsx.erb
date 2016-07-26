@@ -27,7 +27,7 @@ var BookmarkNewForm = React.createClass({
       this.renderedForm().on(
         "click",
         ".cancel",
-        this.toggleDisplaying
+        this.props.toggleDisplaying
       );
 
       // press esc to hide
@@ -35,7 +35,7 @@ var BookmarkNewForm = React.createClass({
         "keyup",
         function(e) {
           if (e.which == 27) {
-            this.toggleDisplaying(e);
+            this.props.toggleDisplaying(e);
           }
         }.bind(this)
       );
