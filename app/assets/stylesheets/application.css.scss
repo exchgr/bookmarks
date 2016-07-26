@@ -98,7 +98,7 @@
 
   box-shadow: 0 0 3em $dark-grey;
   border-radius: 1em;
-  padding: 1em;
+  padding: 2em;
 
   background-color: white;
 }
@@ -138,6 +138,10 @@ h1, h2, h3, h4, h5, h6 {
   &:first-child {
     margin-top: 0;
   }
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 a {
@@ -208,6 +212,10 @@ form {
 
   .controls {
     text-align: right;
+
+    .button {
+      margin-left: .5em;
+    }
   }
 
   .field_with_errors {
