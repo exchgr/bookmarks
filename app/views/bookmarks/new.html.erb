@@ -1,25 +1,3 @@
 <div class="container">
-  <h2>Add a bookmark</h2>
-
-  <%= form_for @bookmark do |f| %>
-    <p>
-      <%= f.label :title %>
-      <%= f.text_field :title %>
-
-      <%= render "application/form/errors",
-        errors: @bookmark.errors.messages[:title] %>
-    </p>
-
-    <p>
-      <%= f.label :url, "URL" %>
-      <%= f.text_field :url %>
-
-      <%= render "application/form/errors",
-        errors: @bookmark.errors.messages[:url] %>
-    </p>
-
-    <p>
-      <%= f.submit "Save", class: "button button-green" %>
-    </p>
-  <% end %>
+  <%= render "new_form", bookmark: @bookmark %>
 </div>

@@ -87,6 +87,26 @@
   clear: right;
 }
 
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  transition: opacity 0.25s;
+
+  box-shadow: 0 0 3em $grey;
+  border-radius: 1em;
+  padding: 1em;
+
+  background-color: white;
+}
+
 // Site-wide styles
 
 body {
@@ -106,6 +126,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
+  color: $dark-blue;
+
   text-decoration: none;
 
   &:hover, &:focus {
@@ -118,6 +140,7 @@ a {
 }
 
 .main-header {
+  z-index: 1000;
   position: fixed;
   box-sizing: border-box;
 
@@ -156,13 +179,20 @@ form {
 
   input[type="text"] {
     margin: 0;
+    padding: .25em;
+    border-radius: .25em;
     font-size: inherit;
 
-    border: 1px solid $black;
+    border: 1px solid $grey;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 1em $light-grey;
+    }
   }
 
-  input[type="submit"] {
-    float: right;
+  .controls {
+    text-align: right;
   }
 
   .field_with_errors {

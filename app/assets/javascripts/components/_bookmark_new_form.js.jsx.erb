@@ -1,0 +1,15 @@
+var BookmarkNewForm = React.createClass({
+  form: function() {
+    return $(".bookmark-new-form");
+  },
+
+  formHtml: function() {
+    var html = this.form().html();
+
+    return {__html: html};
+  },
+
+  render: function() {
+    return (<div className={this.props.className + " rendered-bookmark-new-form"} dangerouslySetInnerHTML={this.formHtml()} />);
+  }
+});
