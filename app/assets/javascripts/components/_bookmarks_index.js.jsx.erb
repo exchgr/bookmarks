@@ -6,47 +6,12 @@ var BookmarksIndex = React.createClass({
     }
   },
 
-  bookmarkNewForm: function() {
-    return $(".rendered-bookmark-new-form");
-  },
-
-  toggleBookmarkNewForm: function(e) {
+  toggleBookmarkNewFormDisplaying: function(e) {
     e.preventDefault();
 
     this.setState({
       bookmarkNewFormDisplaying: !this.state.bookmarkNewFormDisplaying
-    }, function() {
-      var titleField = this.bookmarkNewForm().find("#bookmark_title")
-
-      if (this.state.bookmarkNewFormDisplaying) {
-        titleField.focus();
-
-        // make "Cancel" hide
-        this.bookmarkNewForm().on(
-          "click",
-          ".cancel",
-          this.toggleBookmarkNewForm
-        );
-
-        // press esc to hide
-        this.bookmarkNewForm().on(
-          "keyup",
-          function(e) {
-            if (e.which == 27) {
-              this.toggleBookmarkNewForm(e);
-            }
-          }.bind(this)
-        );
-      } else {
-        this.bookmarkNewForm().off("click", ".cancel");
-        this.bookmarkNewForm().off("keyup");
-        titleField.blur(); // prevent typing on hidden field
-      }
     });
-  },
-
-  bookmarkNewFormDisplayingClass: function() {
-    return this.state.bookmarkNewFormDisplaying ? "" : "hidden"
   },
 
   render: function() {
@@ -58,15 +23,14 @@ var BookmarksIndex = React.createClass({
           <a
             href="<%= new_bookmark_path %>"
             className="button button-green right"
-            onClick={this.toggleBookmarkNewForm}
+            onClick={this.toggleBookmarkNewFormDisplaying}
           >
             Add bookmark
           </a>
         </header>
 
         <BookmarksList bookmarks={this.state.bookmarks} />
-        <BookmarkNewForm className={this.bookmarkNewFormDisplayingClass() + " modal"} />
-        <div className={this.bookmarkNewFormDisplayingClass() + " modal-overlay"} />
+        <BookmarkNewForm displaying={this.state.bookmarkNewFormDisplaying} toggleDisplaying={this.toggleBookmarkNewFormDisplaying} />
       </div>
     );
   }

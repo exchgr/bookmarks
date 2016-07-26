@@ -1,15 +1,55 @@
 var BookmarkNewForm = React.createClass({
-  form: function() {
+  formToRender: function() {
     return $(".bookmark-new-form");
   },
 
   formHtml: function() {
-    var html = this.form().html();
+    var html = this.formToRender().html();
 
     return {__html: html};
   },
 
+  renderedForm: function() {
+    return $(".rendered-bookmark-new-form");
+  },
+
+  displayingClass: function() {
+    return this.props.displaying ? "" : "hidden"
+  },
+
   render: function() {
-    return (<div className={this.props.className + " rendered-bookmark-new-form"} dangerouslySetInnerHTML={this.formHtml()} />);
+    var titleField = this.renderedForm().find("#bookmark_title")
+
+    if (this.props.displaying) {
+      titleField.focus();
+
+      // make "Cancel" hide
+      this.renderedForm().on(
+        "click",
+        ".cancel",
+        this.toggleDisplaying
+      );
+
+      // press esc to hide
+      this.renderedForm().on(
+        "keyup",
+        function(e) {
+          if (e.which == 27) {
+            this.toggleDisplaying(e);
+          }
+        }.bind(this)
+      );
+    } else {
+      this.renderedForm().off("click", ".cancel");
+      this.renderedForm().off("keyup");
+      titleField.blur(); // prevent typing on hidden field
+    }
+
+    return (
+      <div>
+        <div className={this.props.className + " " + this.displayingClass() + " modal rendered-bookmark-new-form"} dangerouslySetInnerHTML={this.formHtml()} />
+        <div className={this.props.className + " " + this.displayingClass() + " modal-overlay"} />
+      </div>
+    );
   }
 });
