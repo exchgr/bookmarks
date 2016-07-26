@@ -66,6 +66,7 @@ var BookmarksIndex = React.createClass({
 
         <BookmarksList bookmarks={this.state.bookmarks} />
         <BookmarkNewForm className={this.bookmarkNewFormDisplayingClass() + " modal"} />
+        <div className={this.bookmarkNewFormDisplayingClass() + " modal-overlay"} />
       </div>
     );
   }
