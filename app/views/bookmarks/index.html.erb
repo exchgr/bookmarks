@@ -1,5 +1,7 @@
 <%= react_component "BookmarksIndex", { bookmarks: @bookmarks } %>
 
-<div class="bookmark-new-form interactive-components">
-  <%= render "new_form", bookmark: @new_bookmark %>
+<div class="interactive-components">
+  <div class="bookmark-new-form">
+    <%= render "new_form", bookmark: @new_bookmark %>
+  </div>
 </div>

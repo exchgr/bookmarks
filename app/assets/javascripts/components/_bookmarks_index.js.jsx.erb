@@ -7,10 +7,41 @@ var BookmarksIndex = React.createClass({
   },
 
   toggleBookmarkNewFormDisplaying: function(e) {
-    e.preventDefault();
+    if (typeof(e) != "undefined") {
+      e.preventDefault();
+    }
 
     this.setState({
       bookmarkNewFormDisplaying: !this.state.bookmarkNewFormDisplaying
+    });
+  },
+
+  handleNewSubmit: function(newBookmark, success, error) {
+    var bookmarks = this.state.bookmarks;
+
+    // not the actual ID, just one we can use to render quickly
+    newBookmark.id = bookmarks[bookmarks.length - 1].id + 1;
+
+    var newBookmarks = bookmarks.concat([newBookmark]);
+    this.setState({bookmarks: newBookmarks});
+
+    $.ajax({
+      url: "/bookmarks.json",
+      dataType: "json",
+      type: "POST",
+      data: newBookmark,
+
+      success: function(data) {
+        this.setState({bookmarks: data});
+        success();
+      }.bind(this),
+
+      error: function(xhr, status, err) {
+
+        this.setState({
+          bookmarks: bookmarks
+        });
+      }.bind(this)
     });
   },
 
@@ -30,7 +61,11 @@ var BookmarksIndex = React.createClass({
         </header>
 
         <BookmarksList bookmarks={this.state.bookmarks} />
-        <BookmarkNewForm displaying={this.state.bookmarkNewFormDisplaying} toggleDisplaying={this.toggleBookmarkNewFormDisplaying} />
+        <BookmarkNewForm
+          displaying={this.state.bookmarkNewFormDisplaying}
+          toggleDisplaying={this.toggleBookmarkNewFormDisplaying}
+          onSubmit={this.handleNewSubmit}
+        />
       </div>
     );
   }

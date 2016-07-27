@@ -12,9 +12,15 @@ class BookmarksController < ApplicationController
     @bookmark = Bookmark.new(bookmark_params)
 
     if @bookmark.save
-      redirect_to root_path
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.json { render json: Bookmark.all }
+      end
     else
-      render action: "new"
+      respond_to do |format|
+        format.html { render action: "new" }
+        format.json { render json: @bookmark.errors.messages, status: 422 }
+      end
     end
   end
 

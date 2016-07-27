@@ -1,6 +1,67 @@
 var BookmarkNewForm = React.createClass({
+  getInitialState: function() {
+    return {
+      title: "",
+      url: ""
+    }
+  },
+
+  componentDidMount: function() {
+    // keep track of state values
+    this.renderedForm().on(
+      "input",
+      "#bookmark_title",
+      this.handleTitleChange
+    );
+
+    this.renderedForm().on(
+      "input",
+      "#bookmark_url",
+      this.handleUrlChange
+    );
+
+    // handle submits
+    this.renderedForm().on(
+      "submit",
+      this.handleSubmit
+    );
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+    var titleField = this.renderedForm().
+      find("#bookmark_title");
+
+    if (this.props.displaying != prevProps.displaying) {
+      if (this.props.displaying) {
+        titleField.focus();
+
+        // make "Cancel" hide
+        this.renderedForm().on(
+          "click",
+          ".cancel",
+          this.props.toggleDisplaying
+        );
+
+        // press esc to hide
+        this.renderedForm().on(
+          "keyup",
+          function(e) {
+            if (e.which == 27) {
+              this.props.toggleDisplaying(e);
+            }
+          }.bind(this)
+        );
+      } else {
+        this.renderedForm().off("click", ".cancel");
+        this.renderedForm().off("keyup");
+        titleField.blur(); // prevent typing on hidden field
+        this.setState({title: "", url: ""});
+      }
+    }
+  },
+
   formToRender: function() {
-    return $(".bookmark-new-form");
+    return $(".interactive-components .bookmark-new-form");
   },
 
   formHtml: function() {
@@ -17,34 +78,37 @@ var BookmarkNewForm = React.createClass({
     return this.props.displaying ? "" : "hidden"
   },
 
-  render: function() {
-    var titleField = this.renderedForm().find("#bookmark_title")
+  handleTitleChange: function(e) {
+    this.setState({title: e.target.value});
+  },
 
-    if (this.props.displaying) {
-      titleField.focus();
+  handleUrlChange: function(e) {
+    this.setState({url: e.target.value});
+  },
 
-      // make "Cancel" hide
-      this.renderedForm().on(
-        "click",
-        ".cancel",
-        this.props.toggleDisplaying
-      );
+  handleSubmit: function(e) {
+    e.preventDefault();
 
-      // press esc to hide
-      this.renderedForm().on(
-        "keyup",
-        function(e) {
-          if (e.which == 27) {
-            this.props.toggleDisplaying(e);
-          }
-        }.bind(this)
-      );
-    } else {
-      this.renderedForm().off("click", ".cancel");
-      this.renderedForm().off("keyup");
-      titleField.blur(); // prevent typing on hidden field
+    var title = this.state.title.trim();
+    var url = this.state.url.trim();
+
+    if (!title || !url) {
+      return;
     }
+    this.props.onSubmit(
+      {bookmark: {title: title, url: url}},
 
+      function() {
+        this.setState({title: "", url: ""});
+        this.props.toggleDisplaying(e);
+      }.bind(this),
+
+      function(errors) {
+      }.bind(this)
+    );
+  },
+
+  render: function() {
     return (
       <div>
         <div className={this.props.className + " " + this.displayingClass() + " modal rendered-bookmark-new-form"} dangerouslySetInnerHTML={this.formHtml()} />
