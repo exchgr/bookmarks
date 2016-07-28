@@ -16,6 +16,8 @@
 // Utilities
 
 @import "variables";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 .container {
   margin: 0 auto;
@@ -85,6 +87,12 @@
 .right {
   float: right;
   clear: right;
+}
+
+.right-abs {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .modal {

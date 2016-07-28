@@ -22,7 +22,15 @@ var BookmarksIndex = React.createClass({
     var bookmarks = this.state.bookmarks;
 
     // not the actual ID, just one we can use to render quickly
-    newBookmark.id = bookmarks[bookmarks.length - 1].id + 1;
+    var newBookmarkId;
+
+    if (bookmarks.length > 0) {
+      newBookmarkId = bookmarks[bookmarks.length - 1].id;
+    } else {
+      newBookmarkId = 0;
+    }
+
+    newBookmark.id = newBookmarkId + 1;
 
     var newBookmarks = bookmarks.concat([newBookmark]);
     this.setState({bookmarks: newBookmarks});
@@ -51,6 +59,30 @@ var BookmarksIndex = React.createClass({
     });
   },
 
+  handleDelete(bookmarkToDelete) {
+    var bookmarks = this.state.bookmarks;
+
+    var newBookmarks = bookmarks.filter(function(bookmark) {
+      return bookmark.id != bookmarkToDelete.id;
+    });
+
+    this.setState({bookmarks: newBookmarks});
+
+    $.ajax({
+      url: "/bookmarks/" + bookmarkToDelete.id + ".json",
+      dataType: "json",
+      type: "DELETE",
+
+      success: function(data) {
+        this.setState({bookmarks: data});
+      }.bind(this),
+
+      error: function(xhr, status, err) {
+        this.setState({bookmarks: bookmarks});
+      }.bind(this)
+    });
+  },
+
   render: function() {
     return (
       <div className="container">
@@ -59,14 +91,18 @@ var BookmarksIndex = React.createClass({
 
           <a
             href="<%= new_bookmark_path %>"
-            className="button button-green right"
+            className="button button-green right-abs"
             onClick={this.toggleBookmarkNewFormDisplaying}
           >
             Add bookmark
           </a>
         </header>
 
-        <BookmarksList bookmarks={this.state.bookmarks} />
+        <BookmarksList
+          bookmarks={this.state.bookmarks}
+          onDelete={this.handleDelete}
+        />
+
         <BookmarkNewForm
           displaying={this.state.bookmarkNewFormDisplaying}
           toggleDisplaying={this.toggleBookmarkNewFormDisplaying}
