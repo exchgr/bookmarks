@@ -2,6 +2,8 @@ class BookmarksController < ApplicationController
   def index
     @bookmarks = Bookmark.all
     @new_bookmark = Bookmark.new
+
+    render component: "BookmarksIndex", props: {bookmarks: @bookmarks}
   end
 
   def new
