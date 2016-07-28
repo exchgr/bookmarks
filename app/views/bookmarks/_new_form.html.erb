@@ -1,24 +1,24 @@
 <h2>Add a bookmark</h2>
 
 <%= form_for bookmark do |f| %>
-  <p>
+  <section>
     <%= f.label :title %>
     <%= f.text_field :title %>
 
     <%= render "application/form/errors",
       errors: bookmark.errors.messages[:title] %>
-  </p>
+  </section>
 
-  <p>
+  <section>
     <%= f.label :url, "URL" %>
     <%= f.text_field :url %>
 
     <%= render "application/form/errors",
       errors: bookmark.errors.messages[:url] %>
-  </p>
+  </section>
 
-  <p class="controls">
+  <section class="controls">
     <%= link_to "Cancel", :back, class: "cancel" %>
     <%= f.submit "Save", class: "button button-green" %>
-  </p>
+  </section>
 <% end %>

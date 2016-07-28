@@ -64,8 +64,29 @@ var BookmarkNewForm = React.createClass({
     return $(".interactive-components .bookmark-new-form");
   },
 
+  formErrorToRender: function() {
+    return $(".interactive-components .bookmark-form-error");
+  },
+
   formHtml: function() {
-    var html = this.formToRender().html();
+    var dom = this.formToRender().clone();
+
+    Object.keys(this.props.errors).forEach(function(error) {
+      var textField = dom.find("input#bookmark_" + error);
+      var errorMessages = this.props.errors[error];
+
+      var errorMessagesDom = errorMessages.map(function(errorMessage) {
+        // create a working copy of the error html from the template
+        var error = this.formErrorToRender().html();
+
+        return $(error).html(errorMessage);
+      }.bind(this));
+
+      textField.after(errorMessagesDom);
+      textField.wrap('<div class="field_with_errors"></div>');
+    }.bind(this));
+
+    var html = dom.html();
 
     return {__html: html};
   },
