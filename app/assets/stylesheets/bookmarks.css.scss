@@ -7,16 +7,27 @@
 
   li {
     border-top: 1px solid $light-grey;
-    padding: .5em 0
+    padding: .5em 0;
+
+    &:last-child {
+      border-bottom: 1px solid $light-grey;
+    }
+
+    .controls {
+      position: relative;
+
+      &, & a {
+        color: $light-grey;
+
+        &:hover {
+          color: $grey;
+          text-decoration: none;
+        }
+      }
+    }
   }
 }
 
 .title {
   position: relative;
-
-  .right {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
 }

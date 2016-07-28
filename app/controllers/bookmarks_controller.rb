@@ -2,6 +2,8 @@ class BookmarksController < ApplicationController
   def index
     @bookmarks = Bookmark.all
     @new_bookmark = Bookmark.new
+
+    render component: "BookmarksIndex", props: {bookmarks: @bookmarks}
   end
 
   def new
@@ -11,15 +13,27 @@ class BookmarksController < ApplicationController
   def create
     @bookmark = Bookmark.new(bookmark_params)
 
-    if @bookmark.save
-      respond_to do |format|
-        format.html { redirect_to root_path }
-        format.json { render json: Bookmark.all }
+    respond_to do |format|
+      format.json do
+        if @bookmark.save
+          render json: Bookmark.all
+        else
+          render json: @bookmark.errors.messages, status: 422
+        end
       end
-    else
-      respond_to do |format|
-        format.html { render action: "new" }
-        format.json { render json: @bookmark.errors.messages, status: 422 }
+    end
+  end
+
+  def destroy
+    @bookmark = Bookmark.find(params[:id])
+
+    respond_to do |format|
+      format.json do
+        if @bookmark.destroy
+          render json: Bookmark.all
+        else
+          render json: @bookmark.errors.messages, status: 422
+        end
       end
     end
   end
