@@ -70,8 +70,7 @@ var BookmarkNewForm = React.createClass({
       }.bind(this),
 
       function() {
-        var dom = this.renderedForm();
-        var titleField = dom.find("#bookmark_title");
+        var titleField = this.renderedForm().find("#bookmark_title");
 
         titleField.focus();
       }.bind(this),
@@ -81,7 +80,7 @@ var BookmarkNewForm = React.createClass({
   render: function() {
     return (
       <div>
-        <form className={this.props.className + " " + this.displayingClass() + " modal rendered-bookmark-new-form"} action="/bookmarks" accept-charset="UTF-8" method="post" onSubmit={this.handleSubmit}>
+        <form className={this.props.className + " " + this.displayingClass() + " modal rendered-bookmark-new-form"} action="/bookmarks" acceptCharset="UTF-8" method="post" onSubmit={this.handleSubmit}>
           <h2>Add a bookmark</h2>
 
           <section>
@@ -89,7 +88,9 @@ var BookmarkNewForm = React.createClass({
               Title
             </label>
 
-            <input type="text" id="bookmark_title" value={this.state.title} onChange={this.handleTitleChange} />
+            <InputWithErrors errors={this.props.errors.title}>
+              <input type="text" id="bookmark_title" value={this.state.title} onChange={this.handleTitleChange} />
+            </InputWithErrors>
           </section>
 
           <section>
@@ -97,7 +98,9 @@ var BookmarkNewForm = React.createClass({
               Url
             </label>
 
-            <input type="text" id="bookmark_url" value={this.state.url} onChange={this.handleUrlChange} />
+            <InputWithErrors errors={this.props.errors.url}>
+              <input type="text" id="bookmark_url" value={this.state.url} onChange={this.handleUrlChange} />
+            </InputWithErrors>
           </section>
 
           <section className="controls">

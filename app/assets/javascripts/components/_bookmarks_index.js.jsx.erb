@@ -13,7 +13,8 @@ var BookmarksIndex = React.createClass({
     }
 
     this.setState({
-      bookmarkNewFormDisplaying: !this.state.bookmarkNewFormDisplaying
+      bookmarkNewFormDisplaying: !this.state.bookmarkNewFormDisplaying,
+      errors: {}
     });
   },
 
@@ -33,7 +34,7 @@ var BookmarksIndex = React.createClass({
       data: newBookmark,
 
       success: function(data) {
-        this.setState({bookmarks: data});
+        this.setState({bookmarks: data, errors: {}});
         success();
       }.bind(this),
 
@@ -44,7 +45,9 @@ var BookmarksIndex = React.createClass({
           bookmarks: bookmarks,
           errors: errors
         });
-      }.bind(this)
+
+        error();
+      }.bind(this),
     });
   },
 

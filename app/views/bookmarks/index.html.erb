@@ -1,12 +1,1 @@
 <%= react_component "BookmarksIndex", { bookmarks: @bookmarks } %>
-
-<div class="interactive-components">
-  <div class="bookmark-new-form">
-    <%= render "new_form", bookmark: @new_bookmark %>
-  </div>
-
-  <div class="bookmark-form-error">
-    <%= render "application/form/errors",
-      errors: [""] %>
-  </div>
-</div>
