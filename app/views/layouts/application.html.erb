@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AvenirCodeTest</title>
+    <title>Bookmark Manager</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+    <% if AvenirCodeTest::Application.assets.find_asset("#{params[:controller]}.css") %>
+      <%= stylesheet_link_tag params[:controller] %>
+    <% end %>
+
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <% if AvenirCodeTest::Application.assets.find_asset("#{params[:controller]}.js") %>
+      <%= javascript_include_tag params[:controller] %>
+    <% end %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render "header" %>
+
+    <div class="content">
+      <%= yield %>
+    </div>
   </body>
 </html>

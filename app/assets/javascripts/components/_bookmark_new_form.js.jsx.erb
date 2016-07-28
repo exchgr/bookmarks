@@ -1,0 +1,116 @@
+var BookmarkNewForm = React.createClass({
+  getInitialState: function() {
+    return {
+      title: "",
+      url: ""
+    }
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+    var titleField = this.renderedForm().
+      find("#bookmark_title");
+
+    if (this.props.displaying != prevProps.displaying) {
+      if (this.props.displaying) {
+        titleField.focus();
+
+        // make "Cancel" hide
+        this.renderedForm().on(
+          "click",
+          ".cancel",
+          this.props.toggleDisplaying
+        );
+
+        // press esc to hide
+        this.renderedForm().on(
+          "keyup",
+          function(e) {
+            if (e.which == 27) {
+              this.props.toggleDisplaying(e);
+            }
+          }.bind(this)
+        );
+      } else {
+        this.renderedForm().off("click", ".cancel");
+        this.renderedForm().off("keyup");
+        titleField.blur(); // prevent typing on hidden field
+        this.setState({title: "", url: ""});
+      }
+    }
+  },
+
+  renderedForm: function() {
+    return $(".rendered-bookmark-new-form");
+  },
+
+  displayingClass: function() {
+    return this.props.displaying ? "" : "hidden"
+  },
+
+  handleTitleChange: function(e) {
+    this.setState({title: e.target.value});
+  },
+
+  handleUrlChange: function(e) {
+    this.setState({url: e.target.value});
+  },
+
+  handleSubmit: function(e) {
+    e.preventDefault();
+
+    var title = this.state.title.trim();
+    var url = this.state.url.trim();
+
+    this.props.onSubmit(
+      {bookmark: {title: title, url: url}},
+
+      function() {
+        this.setState({title: "", url: ""});
+        this.props.toggleDisplaying(e);
+      }.bind(this),
+
+      function() {
+        var titleField = this.renderedForm().find("#bookmark_title");
+
+        titleField.focus();
+      }.bind(this),
+    );
+  },
+
+  render: function() {
+    return (
+      <div>
+        <form className={this.props.className + " " + this.displayingClass() + " modal rendered-bookmark-new-form"} action="/bookmarks" acceptCharset="UTF-8" method="post" onSubmit={this.handleSubmit}>
+          <h2>Add a bookmark</h2>
+
+          <section>
+            <label htmlFor="bookmark_title">
+              Title
+            </label>
+
+            <InputWithErrors errors={this.props.errors.title}>
+              <input type="text" id="bookmark_title" value={this.state.title} onChange={this.handleTitleChange} />
+            </InputWithErrors>
+          </section>
+
+          <section>
+            <label htmlFor="bookmark_url">
+              Url
+            </label>
+
+            <InputWithErrors errors={this.props.errors.url}>
+              <input type="text" id="bookmark_url" value={this.state.url} onChange={this.handleUrlChange} />
+            </InputWithErrors>
+          </section>
+
+          <section className="controls">
+            <%= link_to "Cancel", :back, className: "cancel" %>
+            <input type="submit" value="Save" className="button button-green" />
+          </section>
+        </form>
+
+        <div className={this.props.className + " " + this.displayingClass() + " modal-overlay"} />
+      </div>
+    );
+  }
+});

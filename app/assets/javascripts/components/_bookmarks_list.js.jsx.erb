@@ -1,0 +1,23 @@
+var BookmarksList = React.createClass({
+  render: function() {
+    var bookmarkNodes = this.props.bookmarks.map(function(bookmark) {
+      return (
+        <Bookmark title={bookmark.title} url={bookmark.url} key={bookmark.id} />
+      );
+    });
+
+    if (bookmarkNodes.length > 0) {
+      return (
+        <ul className="bookmarks-index">
+          {bookmarkNodes}
+        </ul>
+      );
+    } else {
+      return (
+        <p className="bookmarks-index empty">
+          You have no bookmarks saved! Click on the button above to get started.
+        </p>
+      );
+    }
+  }
+});

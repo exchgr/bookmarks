@@ -30,9 +30,16 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'validate_url', '~> 1.0.2'
+
+# Using a ref from github (latest master as of this writing) for Rails 5 compatibility
+gem 'react-rails', github: 'reactjs/react-rails', ref: 'd854ff9' # '~> 1.5.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'rspec-rails', '~> 3.5.0'
+  gem 'pry-byebug', '~> 3.4'
 end
 
 group :development do

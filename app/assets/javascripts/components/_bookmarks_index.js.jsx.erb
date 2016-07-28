@@ -1,0 +1,79 @@
+var BookmarksIndex = React.createClass({
+  getInitialState: function() {
+    return {
+      bookmarks: this.props.bookmarks,
+      bookmarkNewFormDisplaying: false,
+      errors: {}
+    }
+  },
+
+  toggleBookmarkNewFormDisplaying: function(e) {
+    if (typeof(e) != "undefined") {
+      e.preventDefault();
+    }
+
+    this.setState({
+      bookmarkNewFormDisplaying: !this.state.bookmarkNewFormDisplaying,
+      errors: {}
+    });
+  },
+
+  handleNewSubmit: function(newBookmark, success, error) {
+    var bookmarks = this.state.bookmarks;
+
+    // not the actual ID, just one we can use to render quickly
+    newBookmark.id = bookmarks[bookmarks.length - 1].id + 1;
+
+    var newBookmarks = bookmarks.concat([newBookmark]);
+    this.setState({bookmarks: newBookmarks});
+
+    $.ajax({
+      url: "/bookmarks.json",
+      dataType: "json",
+      type: "POST",
+      data: newBookmark,
+
+      success: function(data) {
+        this.setState({bookmarks: data, errors: {}});
+        success();
+      }.bind(this),
+
+      error: function(xhr, status, err) {
+        var errors = xhr.responseJSON;
+
+        this.setState({
+          bookmarks: bookmarks,
+          errors: errors
+        });
+
+        error();
+      }.bind(this),
+    });
+  },
+
+  render: function() {
+    return (
+      <div className="container">
+        <header className="title">
+          <h2>Your Bookmarks</h2>
+
+          <a
+            href="<%= new_bookmark_path %>"
+            className="button button-green right"
+            onClick={this.toggleBookmarkNewFormDisplaying}
+          >
+            Add bookmark
+          </a>
+        </header>
+
+        <BookmarksList bookmarks={this.state.bookmarks} />
+        <BookmarkNewForm
+          displaying={this.state.bookmarkNewFormDisplaying}
+          toggleDisplaying={this.toggleBookmarkNewFormDisplaying}
+          errors={this.state.errors}
+          onSubmit={this.handleNewSubmit}
+        />
+      </div>
+    );
+  }
+});

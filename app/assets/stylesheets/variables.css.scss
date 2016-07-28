@@ -1,0 +1,30 @@
+// Colors
+
+// Greys
+
+$black: #333;
+$dark-grey: #666;
+$grey: #999;
+$light-grey: #ccc;
+
+// ROYGBV
+
+$red: #FF596A;
+$orange: #FF9C59;
+$yellow: #FFEE59;
+$green: #59FF9C;
+$blue: #59BDFF;
+$violet: #9C59FF;
+
+// Dark-ROYGBV
+
+$dark-red: darken($red, 25%);
+$dark-orange: darken($orange, 25%);
+$dark-yellow: darken($yellow, 25%);
+$dark-green: darken($green, 25%);
+$dark-blue: darken($blue, 25%);
+$dark-violet: darken($violet, 25%);
+
+// Variables
+
+$header-height: 5em;
