@@ -6,27 +6,6 @@ var BookmarkNewForm = React.createClass({
     }
   },
 
-  componentDidMount: function() {
-    // keep track of state values
-    this.renderedForm().on(
-      "input",
-      "#bookmark_title",
-      this.handleTitleChange
-    );
-
-    this.renderedForm().on(
-      "input",
-      "#bookmark_url",
-      this.handleUrlChange
-    );
-
-    // handle submits
-    this.renderedForm().on(
-      "submit",
-      this.handleSubmit
-    );
-  },
-
   componentDidUpdate: function(prevProps, prevState) {
     var titleField = this.renderedForm().
       find("#bookmark_title");
@@ -60,37 +39,6 @@ var BookmarkNewForm = React.createClass({
     }
   },
 
-  formToRender: function() {
-    return $(".interactive-components .bookmark-new-form");
-  },
-
-  formErrorToRender: function() {
-    return $(".interactive-components .bookmark-form-error");
-  },
-
-  formHtml: function() {
-    var dom = this.formToRender().clone();
-
-    Object.keys(this.props.errors).forEach(function(error) {
-      var textField = dom.find("input#bookmark_" + error);
-      var errorMessages = this.props.errors[error];
-
-      var errorMessagesDom = errorMessages.map(function(errorMessage) {
-        // create a working copy of the error html from the template
-        var error = this.formErrorToRender().html();
-
-        return $(error).html(errorMessage);
-      }.bind(this));
-
-      textField.after(errorMessagesDom);
-      textField.wrap('<div class="field_with_errors"></div>');
-    }.bind(this));
-
-    var html = dom.html();
-
-    return {__html: html};
-  },
-
   renderedForm: function() {
     return $(".rendered-bookmark-new-form");
   },
@@ -113,9 +61,6 @@ var BookmarkNewForm = React.createClass({
     var title = this.state.title.trim();
     var url = this.state.url.trim();
 
-    if (!title || !url) {
-      return;
-    }
     this.props.onSubmit(
       {bookmark: {title: title, url: url}},
 
@@ -124,15 +69,43 @@ var BookmarkNewForm = React.createClass({
         this.props.toggleDisplaying(e);
       }.bind(this),
 
-      function(errors) {
-      }.bind(this)
+      function() {
+        var dom = this.renderedForm();
+        var titleField = dom.find("#bookmark_title");
+
+        titleField.focus();
+      }.bind(this),
     );
   },
 
   render: function() {
     return (
       <div>
-        <div className={this.props.className + " " + this.displayingClass() + " modal rendered-bookmark-new-form"} dangerouslySetInnerHTML={this.formHtml()} />
+        <form className={this.props.className + " " + this.displayingClass() + " modal rendered-bookmark-new-form"} action="/bookmarks" accept-charset="UTF-8" method="post" onSubmit={this.handleSubmit}>
+          <h2>Add a bookmark</h2>
+
+          <section>
+            <label htmlFor="bookmark_title">
+              Title
+            </label>
+
+            <input type="text" id="bookmark_title" value={this.state.title} onChange={this.handleTitleChange} />
+          </section>
+
+          <section>
+            <label htmlFor="bookmark_url">
+              Url
+            </label>
+
+            <input type="text" id="bookmark_url" value={this.state.url} onChange={this.handleUrlChange} />
+          </section>
+
+          <section className="controls">
+            <%= link_to "Cancel", :back, className: "cancel" %>
+            <input type="submit" value="Save" className="button button-green" />
+          </section>
+        </form>
+
         <div className={this.props.className + " " + this.displayingClass() + " modal-overlay"} />
       </div>
     );
