@@ -3,8 +3,7 @@ var BookmarkForm = React.createClass({
     return {
       id: null,
       title: "",
-      url: "",
-      errors: {}
+      url: ""
     };
   },
 
@@ -12,7 +11,8 @@ var BookmarkForm = React.createClass({
     return {
       id: this.props.id,
       title: this.props.title,
-      url: this.props.url
+      url: this.props.url,
+      errors: {}
     }
   },
 
@@ -81,10 +81,11 @@ var BookmarkForm = React.createClass({
         this.props.toggleDisplaying(e);
       }.bind(this),
 
-      function() {
+      function(errors) {
         var titleField = this.props.renderedForm().find("#bookmark_title");
 
         titleField.focus();
+        this.setState({errors: errors});
       }.bind(this),
     );
   },
@@ -101,7 +102,7 @@ var BookmarkForm = React.createClass({
               Title
             </label>
 
-            <InputWithErrors errors={this.props.errors.title}>
+            <InputWithErrors errors={this.state.errors.title}>
               <input type="text" id="bookmark_title" value={this.state.title} onChange={this.handleTitleChange} />
             </InputWithErrors>
           </section>
@@ -111,7 +112,7 @@ var BookmarkForm = React.createClass({
               Url
             </label>
 
-            <InputWithErrors errors={this.props.errors.url}>
+            <InputWithErrors errors={this.state.errors.url}>
               <input type="text" id="bookmark_url" value={this.state.url} onChange={this.handleUrlChange} />
             </InputWithErrors>
           </section>

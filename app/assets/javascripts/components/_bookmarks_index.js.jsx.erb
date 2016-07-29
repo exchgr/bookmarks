@@ -70,10 +70,9 @@ var BookmarksIndex = React.createClass({
 
         this.setState({
           bookmarks: oldBookmarks,
-          errors: errors
         });
 
-        error();
+        error(errors);
       }.bind(this),
     });
   },

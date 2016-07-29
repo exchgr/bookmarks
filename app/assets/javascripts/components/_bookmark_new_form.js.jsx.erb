@@ -6,13 +6,12 @@ var BookmarkNewForm = React.createClass({
   render: function() {
     return (
       <BookmarkForm
+        className="rendered-bookmark-new-form"
         headerText="Add a bookmark"
         displaying={this.props.displaying}
         onSubmit={this.props.onSubmit}
-        errors={this.props.errors}
         renderedForm={this.renderedForm}
         toggleDisplaying={this.props.toggleDisplaying}
-        className="rendered-bookmark-new-form"
       />
     );
   }
