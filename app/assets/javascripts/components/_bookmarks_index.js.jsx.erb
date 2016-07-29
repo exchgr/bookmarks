@@ -35,10 +35,29 @@ var BookmarksIndex = React.createClass({
     var newBookmarks = bookmarks.concat([newBookmark]);
     this.setState({bookmarks: newBookmarks});
 
+    this.handleSubmit("/bookmarks.json", "POST", newBookmark, bookmarks, success, error);
+  },
+
+  handleEditSubmit: function(bookmark, success, error) {
+    newBookmark = bookmark.bookmark;
+
+    var oldBookmarks = this.state.bookmarks;
+    var newBookmarks = oldBookmarks.slice(0);
+
+    var bookmarkIndex = newBookmarks.findIndex(function(bookmarkComponent) {
+      return newBookmark.id == bookmarkComponent.id
+    });
+
+    newBookmarks[bookmarkIndex] = newBookmark;
+
+    this.handleSubmit("/bookmarks/" + newBookmark.id, "PATCH", {bookmark: newBookmark}, oldBookmarks, success, error);
+  },
+
+  handleSubmit: function(endpoint, method, newBookmark, oldBookmarks, success, error) {
     $.ajax({
-      url: "/bookmarks.json",
+      url: endpoint,
       dataType: "json",
-      type: "POST",
+      type: method,
       data: newBookmark,
 
       success: function(data) {
@@ -50,7 +69,7 @@ var BookmarksIndex = React.createClass({
         var errors = xhr.responseJSON;
 
         this.setState({
-          bookmarks: bookmarks,
+          bookmarks: oldBookmarks,
           errors: errors
         });
 
@@ -90,7 +109,7 @@ var BookmarksIndex = React.createClass({
           <h2>Your Bookmarks</h2>
 
           <a
-            href="<%= new_bookmark_path %>"
+            href="#"
             className="button button-green right-abs"
             onClick={this.toggleBookmarkNewFormDisplaying}
           >
@@ -101,6 +120,7 @@ var BookmarksIndex = React.createClass({
         <BookmarksList
           bookmarks={this.state.bookmarks}
           onDelete={this.handleDelete}
+          onSubmit={this.handleEditSubmit}
         />
 
         <BookmarkNewForm

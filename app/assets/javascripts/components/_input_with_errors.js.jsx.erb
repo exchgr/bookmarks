@@ -4,8 +4,8 @@ var InputWithErrors = React.createClass({
   },
 
   render: function() {
-    errorNodes = this.props.errors.map(function(error) {
-      return <InputError error={error} />
+    errorNodes = this.props.errors.map(function(error, index) {
+      return <InputError error={error} key={index} />
     })
 
     var field;

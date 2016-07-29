@@ -2,7 +2,14 @@ var BookmarksList = React.createClass({
   render: function() {
     var bookmarkNodes = this.props.bookmarks.map(function(bookmark) {
       return (
-        <Bookmark id={bookmark.id} title={bookmark.title} url={bookmark.url} key={bookmark.id} onDelete={this.props.onDelete} />
+        <Bookmark
+          id={bookmark.id}
+          title={bookmark.title}
+          url={bookmark.url}
+          key={bookmark.id}
+          onSubmit={this.props.onSubmit}
+          onDelete={this.props.onDelete}
+        />
       );
     }.bind(this));
 
