@@ -1,21 +1,51 @@
 var Bookmark = React.createClass({
+  getInitialState: function() {
+    return {editFormDisplaying: false};
+  },
+
   handleDelete: function(e) {
     e.preventDefault();
 
     this.props.onDelete(this.props);
   },
 
+  editFormDisplayingClass: function() {
+    return this.state.editFormDisplaying ? "" : "hidden"
+  },
+
+  toggleEditFormDisplaying: function(e) {
+    e.preventDefault();
+
+    this.setState({
+      editFormDisplaying: !this.state.editFormDisplaying
+    });
+  },
+
   render: function() {
     return (
       <li>
         <a href={this.props.url}>{this.props.title}</a>
+
         <div className="controls">
           <div className="right-abs">
+            <a href="#" onClick={this.toggleEditFormDisplaying}>
+              <i className="fa fa-pencil-square-o" />
+            </a>
+
             <a href={"/bookmarks/" + this.props.id} onClick={this.handleDelete}>
               <i className="fa fa-trash-o" />
             </a>
           </div>
         </div>
+
+        <BookmarkEditForm
+          displaying={this.state.editFormDisplaying}
+          toggleDisplaying={this.toggleEditFormDisplaying}
+          onSubmit={this.props.onSubmit}
+          title={this.props.title}
+          url={this.props.url}
+          id={this.props.id}
+        />
       </li>
     );
   }

@@ -24,6 +24,20 @@ class BookmarksController < ApplicationController
     end
   end
 
+  def update
+    @bookmark = Bookmark.find(params[:id])
+
+    respond_to do |format|
+      format.json do
+        if @bookmark.update(bookmark_params)
+          render json: Bookmark.all
+        else
+          render json: @bookmark.errors.messages, status: 422
+        end
+      end
+    end
+  end
+
   def destroy
     @bookmark = Bookmark.find(params[:id])
 

@@ -7,13 +7,13 @@
 
   li {
     border-top: 1px solid $light-grey;
-    padding: .5em 0;
+    padding: 1em 0;
 
     &:last-child {
       border-bottom: 1px solid $light-grey;
     }
 
-    .controls {
+    & > .controls {
       position: relative;
 
       &, & a {
@@ -23,6 +23,10 @@
           color: $grey;
           text-decoration: none;
         }
+      }
+
+      .fa {
+        margin-left: .5em;
       }
     }
   }
