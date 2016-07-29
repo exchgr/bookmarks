@@ -94,7 +94,7 @@ var BookmarkForm = React.createClass({
     return(
       <div>
         <form className={this.displayingClass() + " modal " + this.props.className} onSubmit={this.handleSubmit}>
-          <h2>Add a bookmark</h2>
+          <h2>{this.props.headerText}</h2>
 
           <section>
             <label htmlFor="bookmark_title">
