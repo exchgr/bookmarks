@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_self
+ *= require react-tagsinput
  */
 
 // Utilities
@@ -204,7 +205,8 @@ form {
     width: 3em;
   }
 
-  input[type="text"] {
+  .react-tagsinput, input[type="text"] {
+    display: inline-block;
     margin: 0;
     padding: .25em;
     border-radius: .25em;
@@ -215,6 +217,17 @@ form {
     &:focus {
       outline: none;
       box-shadow: 0 0 1em $light-grey;
+    }
+  }
+
+  .react-tagsinput .react-tagsinput-input {
+    margin: 0;
+    border: 0;
+    padding: 0;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
     }
   }
 

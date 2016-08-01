@@ -1,9 +1,12 @@
+//= require react-tagsinput
+
 var BookmarkForm = React.createClass({
   getDefaultProps: function() {
     return {
       id: null,
       title: "",
-      url: ""
+      url: "",
+      tags: []
     };
   },
 
@@ -12,6 +15,7 @@ var BookmarkForm = React.createClass({
       id: this.props.id,
       title: this.props.title,
       url: this.props.url,
+      tags: this.props.tags,
       errors: {}
     }
   },
@@ -60,6 +64,10 @@ var BookmarkForm = React.createClass({
 
   handleUrlChange: function(e) {
     this.setState({url: e.target.value});
+  },
+
+  handleTagsChange: function(tags) {
+    this.setState({tags: tags});
   },
 
   handleSubmit: function(e) {
@@ -114,6 +122,16 @@ var BookmarkForm = React.createClass({
 
             <InputWithErrors errors={this.state.errors.url}>
               <input type="text" id="bookmark_url" value={this.state.url} onChange={this.handleUrlChange} />
+            </InputWithErrors>
+          </section>
+
+          <section>
+            <label htmlFor="tags">
+              Tags
+            </label>
+
+            <InputWithErrors errors={this.state.errors.tags}>
+              <ReactTagsInput value={this.state.tags} onChange={this.handleTagsChange} />
             </InputWithErrors>
           </section>
 

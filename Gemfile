@@ -36,6 +36,9 @@ gem 'font-awesome-sass', '~> 4.6.2'
 # Using a ref from github (latest master as of this writing) for Rails 5 compatibility
 gem 'react-rails', github: 'reactjs/react-rails', ref: 'd854ff9' # '~> 1.5.0'
 
+# a package originally only available as a bower package
+gem 'rails-assets-react-tagsinput', source: 'https://rails-assets.org'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

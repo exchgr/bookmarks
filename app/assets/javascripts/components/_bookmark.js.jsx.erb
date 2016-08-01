@@ -14,7 +14,9 @@ var Bookmark = React.createClass({
   },
 
   toggleEditFormDisplaying: function(e) {
-    e.preventDefault();
+    if (!e.isDefaultPrevented()) {
+      e.preventDefault();
+    }
 
     this.setState({
       editFormDisplaying: !this.state.editFormDisplaying
