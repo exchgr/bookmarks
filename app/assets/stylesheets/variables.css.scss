@@ -43,10 +43,6 @@ $header-height: 5em;
   }
 
   a {
-    color: $dark-grey;
-
-    &:hover {
-      text-decoration: none;
-    }
+    color: inherit;
   }
 }

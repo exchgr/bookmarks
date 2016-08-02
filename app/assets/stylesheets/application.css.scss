@@ -249,6 +249,14 @@ form {
         box-shadow: none;
       }
     }
+
+    .react-tagsinput-remove {
+      color: $dark-grey;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
 
   .controls {
