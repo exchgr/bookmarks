@@ -93,7 +93,7 @@
 .right-abs {
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: 0.1em;
 }
 
 .modal {
@@ -214,6 +214,7 @@ form {
     padding: .25em;
     border-radius: .25em;
     font-size: inherit;
+    font-family: inherit;
 
     width: 20em;
     max-width: 100%;
@@ -231,8 +232,8 @@ form {
 
     .react-tagsinput-tag {
       margin: 0 .25rem .25rem 0;
-      padding: .25rem;
-      font-size: inherit;
+      font-family: inherit;
+      @include tag;
     }
 
     .react-tagsinput-input {

@@ -51,7 +51,7 @@ class BookmarksController < ApplicationController
   private
 
   def all_bookmarks_with_tags_json
-    Bookmark.all.includes(:tags).as_json(include: {tags: {only: [:name]}})
+    Bookmark.all.includes(:tags).as_json(include: {tags: {only: [:id, :name]}})
   end
 
   def bookmark_params
