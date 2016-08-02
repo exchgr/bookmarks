@@ -209,6 +209,7 @@ form {
   }
 
   .react-tagsinput, input[type="text"] {
+    -webkit-appearance: none;
     display: inline-block;
     margin: 0;
     padding: .25em;
@@ -228,8 +229,6 @@ form {
   }
 
   .react-tagsinput {
-    padding-bottom: 0;
-
     .react-tagsinput-tag {
       padding: 0;
       font-family: inherit;
@@ -238,12 +237,12 @@ form {
     }
 
     .react-tagsinput-input {
-      margin: 0 .25rem .25rem 0;
-      border: 1px transparent solid;
-      padding: .25rem;
-      color: black;
+      border: 0;
+      padding: 0;
 
       width: auto;
+
+      color: black;
 
       &:focus {
         outline: none;
