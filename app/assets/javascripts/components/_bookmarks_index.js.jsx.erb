@@ -102,10 +102,19 @@ var BookmarksIndex = React.createClass({
   },
 
   render: function() {
+    var taggedWith;
+
+    if (typeof(this.props.taggedWith) != "undefined") {
+      taggedWith = <span>Tagged with
+        #{this.props.taggedWith}
+      </span>
+    }
+
     return (
       <div className="container">
         <header className="title">
           <h2>Your Bookmarks</h2>
+          {taggedWith}
 
           <a
             href="#"
