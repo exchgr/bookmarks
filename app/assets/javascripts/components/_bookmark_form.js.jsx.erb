@@ -3,19 +3,21 @@
 var BookmarkForm = React.createClass({
   getDefaultProps: function() {
     return {
-      id: null,
-      title: "",
-      url: "",
-      tags: []
+      data: {
+        id: null,
+        title: "",
+        url: "",
+        tags: []
+      },
     };
   },
 
   getInitialState: function() {
     return {
-      id: this.props.id,
-      title: this.props.title,
-      url: this.props.url,
-      tags: this.props.tags,
+      id: this.props.data.id,
+      title: this.props.data.title,
+      url: this.props.data.url,
+      tags: this.props.data.tags,
       errors: {}
     }
   },
@@ -46,8 +48,10 @@ var BookmarkForm = React.createClass({
           }.bind(this)
         );
       } else {
+        // unbind all the events
         this.props.renderedForm().off("click", ".cancel");
         this.props.renderedForm().off("keyup");
+
         titleField.blur(); // prevent typing on hidden field
         this.setState(this.getInitialState());
       }

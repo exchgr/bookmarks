@@ -1,21 +1,18 @@
 var BookmarkEditForm = React.createClass({
   renderedForm: function() {
-    return $(".rendered-bookmark-edit-form-" + this.props.id);
+    return $(".rendered-bookmark-edit-form-" + this.props.data.id);
   },
 
   render: function() {
     return (
       <BookmarkForm
-        className={"rendered-bookmark-edit-form-" + this.props.id}
+        className={"rendered-bookmark-edit-form-" + this.props.data.id}
         headerText="Edit bookmark"
         displaying={this.props.displaying}
         toggleDisplaying={this.props.toggleDisplaying}
         onSubmit={this.props.onSubmit}
         renderedForm={this.renderedForm}
-        id={this.props.id}
-        title={this.props.title}
-        url={this.props.url}
-        tags={this.props.tags}
+        data={this.props.data}
       />
     );
   },

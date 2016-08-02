@@ -114,7 +114,7 @@ var BookmarksIndex = React.createClass({
     });
   },
 
-  render: function() {
+  headerSupplement: function() {
     var headerSupplement;
 
     if (typeof(this.props.taggedWith) != "undefined") {
@@ -135,12 +135,16 @@ var BookmarksIndex = React.createClass({
       );
     }
 
+    return headerSupplement;
+  },
+
+  render: function() {
     return (
       <div className="container">
         <header className="title">
           <h2>Your Bookmarks</h2>
           <span className="right-abs">
-            {headerSupplement}
+            {this.headerSupplement()}
           </span>
         </header>
 
