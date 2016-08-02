@@ -1,13 +1,9 @@
 class BookmarksController < ApplicationController
   def index
-    @bookmarks = Bookmark.all
+    @bookmarks = all_bookmarks_with_tags_json
     @new_bookmark = Bookmark.new
 
     render component: "BookmarksIndex", props: {bookmarks: @bookmarks}
-  end
-
-  def new
-    @bookmark = Bookmark.new
   end
 
   def create
@@ -16,7 +12,7 @@ class BookmarksController < ApplicationController
     respond_to do |format|
       format.json do
         if @bookmark.save
-          render json: Bookmark.all
+          render json: all_bookmarks_with_tags_json
         else
           render json: @bookmark.errors.messages, status: 422
         end
@@ -30,7 +26,7 @@ class BookmarksController < ApplicationController
     respond_to do |format|
       format.json do
         if @bookmark.update(bookmark_params)
-          render json: Bookmark.all
+          render json: all_bookmarks_with_tags_json
         else
           render json: @bookmark.errors.messages, status: 422
         end
@@ -44,7 +40,7 @@ class BookmarksController < ApplicationController
     respond_to do |format|
       format.json do
         if @bookmark.destroy
-          render json: Bookmark.all
+          render json: all_bookmarks_with_tags_json
         else
           render json: @bookmark.errors.messages, status: 422
         end
@@ -54,7 +50,11 @@ class BookmarksController < ApplicationController
 
   private
 
+  def all_bookmarks_with_tags_json
+    Bookmark.all.includes(:tags).as_json(include: {tags: {only: [:name]}})
+  end
+
   def bookmark_params
-    params[:bookmark].permit(:title, :url)
+    params[:bookmark].permit(:title, :url, :tag_list)
   end
 end

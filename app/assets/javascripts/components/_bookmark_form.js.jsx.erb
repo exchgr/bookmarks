@@ -58,6 +58,12 @@ var BookmarkForm = React.createClass({
     return this.props.displaying ? "" : "hidden"
   },
 
+  tagList: function() {
+    return this.state.tags.map(function(tag) {
+      return tag.name;
+    });
+  },
+
   handleTitleChange: function(e) {
     this.setState({title: e.target.value});
   },
@@ -66,7 +72,11 @@ var BookmarkForm = React.createClass({
     this.setState({url: e.target.value});
   },
 
-  handleTagsChange: function(tags) {
+  handleTagsChange: function(tagList) {
+    var tags = tagList.map(function(name) {
+      return {name: name};
+    });
+
     this.setState({tags: tags});
   },
 
@@ -76,12 +86,14 @@ var BookmarkForm = React.createClass({
     var id = this.state.id;
     var title = this.state.title.trim();
     var url = this.state.url.trim();
+    var tags = this.tagList().join(",");
 
     this.props.onSubmit(
       {bookmark: {
         id: id,
         title: title,
-        url: url
+        url: url,
+        tag_list: tags
       }},
 
       function() {
@@ -130,8 +142,8 @@ var BookmarkForm = React.createClass({
               Tags
             </label>
 
-            <InputWithErrors errors={this.state.errors.tags}>
-              <ReactTagsInput value={this.state.tags} onChange={this.handleTagsChange} />
+            <InputWithErrors errors={this.state.errors.tag_list}>
+              <ReactTagsInput value={this.tagList()} onChange={this.handleTagsChange} />
             </InputWithErrors>
           </section>
 
