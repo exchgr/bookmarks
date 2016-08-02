@@ -86,14 +86,16 @@ var BookmarkForm = React.createClass({
     var id = this.state.id;
     var title = this.state.title.trim();
     var url = this.state.url.trim();
-    var tags = this.tagList().join(",");
+    var tag_list = this.tagList().join(",");
+    var tags = this.state.tags;
 
     this.props.onSubmit(
       {bookmark: {
         id: id,
         title: title,
         url: url,
-        tag_list: tags
+        tag_list: tag_list,
+        tags: tags
       }},
 
       function() {

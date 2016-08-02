@@ -32,7 +32,7 @@ var BookmarksIndex = React.createClass({
 
     newBookmark.id = newBookmarkId + 1;
 
-    var newBookmarks = bookmarks.concat([newBookmark]);
+    var newBookmarks = bookmarks.concat([newBookmark.bookmark]);
     this.setState({bookmarks: newBookmarks});
 
     this.handleSubmit("/bookmarks.json", "POST", newBookmark, bookmarks, success, error);
