@@ -212,6 +212,8 @@ form {
     border-radius: .25em;
     font-size: inherit;
 
+    width: 20em;
+
     border: 1px solid $grey;
 
     &:focus {
@@ -220,14 +222,26 @@ form {
     }
   }
 
-  .react-tagsinput .react-tagsinput-input {
-    margin: 0;
-    border: 0;
-    padding: 0;
+  .react-tagsinput {
+    padding-bottom: 0;
 
-    &:focus {
-      outline: none;
-      box-shadow: none;
+    .react-tagsinput-tag {
+      margin: 0 .25rem .25rem 0;
+      padding: .25rem;
+      font-size: inherit;
+    }
+
+    .react-tagsinput-input {
+      margin: 0 .25rem .25rem 0;
+      border: 1px transparent solid;
+      padding: .25rem;
+
+      width: auto;
+
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
     }
   }
 
