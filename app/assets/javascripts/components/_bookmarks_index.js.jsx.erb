@@ -102,27 +102,33 @@ var BookmarksIndex = React.createClass({
   },
 
   render: function() {
-    var taggedWith;
+    var headerSupplement;
 
     if (typeof(this.props.taggedWith) != "undefined") {
-      taggedWith = <span>Tagged with
-        #{this.props.taggedWith}
-      </span>
+      headerSupplement = (
+        <span>Tagged with
+          #{this.props.taggedWith}
+        </span>
+      );
+    } else {
+      headerSupplement = (
+        <a
+          href="#"
+          className="button button-green"
+          onClick={this.toggleBookmarkNewFormDisplaying}
+        >
+          Add bookmark
+        </a>
+      );
     }
 
     return (
       <div className="container">
         <header className="title">
           <h2>Your Bookmarks</h2>
-          {taggedWith}
-
-          <a
-            href="#"
-            className="button button-green right-abs"
-            onClick={this.toggleBookmarkNewFormDisplaying}
-          >
-            Add bookmark
-          </a>
+          <span className="right-abs">
+            {headerSupplement}
+          </span>
         </header>
 
         <BookmarksList
