@@ -6,7 +6,7 @@ class BookmarksController < ApplicationController
     render component: "BookmarksIndex", props: {bookmarks: @bookmarks}
   end
 
-  def tagged_with
+  def tags
     @bookmarks = Bookmark.tagged_with(params[:tag]).with_tags_json
 
     render component: "BookmarksIndex", props: {bookmarks: @bookmarks, taggedWith: params[:tag]}
