@@ -1,7 +1,6 @@
 class BookmarksController < ApplicationController
   def index
     @bookmarks = Bookmark.all.with_tags_json
-    @new_bookmark = Bookmark.new
 
     render component: "BookmarksIndex", props: {bookmarks: @bookmarks}
   end
