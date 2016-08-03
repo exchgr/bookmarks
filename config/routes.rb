@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :bookmarks, only: [:index, :create, :destroy, :update]
+  resources :bookmarks, only: [:create, :destroy, :update]
+
+  get "/tags/:tag", to: "bookmarks#tags"
 
   root to: "bookmarks#index"
 end

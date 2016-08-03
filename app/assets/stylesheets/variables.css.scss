@@ -28,3 +28,21 @@ $dark-violet: darken($violet, 25%);
 // Variables
 
 $header-height: 5em;
+
+// Mixins
+
+@mixin tag {
+  margin: 0 .5rem 0 0;
+  border: none;
+  font-size: inherit;
+
+  background-color: transparent;
+
+  &:before {
+    content: "#";
+  }
+
+  a {
+    color: inherit;
+  }
+}

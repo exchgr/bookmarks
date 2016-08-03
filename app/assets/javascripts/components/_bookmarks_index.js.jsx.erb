@@ -19,23 +19,28 @@ var BookmarksIndex = React.createClass({
   },
 
   handleNewSubmit: function(newBookmark, success, error) {
-    var bookmarks = this.state.bookmarks;
+    var oldBookmarks = this.state.bookmarks;
+    var lastBookmarkId;
 
-    // not the actual ID, just one we can use to render quickly
-    var newBookmarkId;
-
-    if (bookmarks.length > 0) {
-      newBookmarkId = bookmarks[bookmarks.length - 1].id;
+    if (oldBookmarks.length > 0) {
+      lastBookmarkId = oldBookmarks[oldBookmarks.length - 1].id;
     } else {
-      newBookmarkId = 0;
+      lastBookmarkId = 0;
     }
 
-    newBookmark.id = newBookmarkId + 1;
+    newBookmark.id = lastBookmarkId + 1;
 
-    var newBookmarks = bookmarks.concat([newBookmark]);
+    var newBookmarks = oldBookmarks.concat([newBookmark.bookmark]);
     this.setState({bookmarks: newBookmarks});
 
-    this.handleSubmit("/bookmarks.json", "POST", newBookmark, bookmarks, success, error);
+    this.handleSubmit(
+      "/bookmarks.json",
+      "POST",
+      newBookmark,
+      oldBookmarks,
+      success,
+      error
+    );
   },
 
   handleEditSubmit: function(bookmark, success, error) {
@@ -50,7 +55,33 @@ var BookmarksIndex = React.createClass({
 
     newBookmarks[bookmarkIndex] = newBookmark;
 
-    this.handleSubmit("/bookmarks/" + newBookmark.id, "PATCH", {bookmark: newBookmark}, oldBookmarks, success, error);
+    this.handleSubmit(
+      "/bookmarks/" + newBookmark.id,
+      "PATCH",
+      {bookmark: newBookmark},
+      oldBookmarks,
+      success,
+      error
+    );
+  },
+
+  handleDelete(bookmarkToDeleteId, success, error) {
+    var oldBookmarks = this.state.bookmarks;
+
+    var newBookmarks = oldBookmarks.filter(function(bookmark) {
+      return bookmark.id != bookmarkToDeleteId;
+    });
+
+    this.setState({bookmarks: newBookmarks});
+
+    this.handleSubmit(
+      "/bookmarks/" + bookmarkToDeleteId + ".json",
+      "DELETE",
+      null,
+      oldBookmarks,
+      success,
+      error
+    );
   },
 
   handleSubmit: function(endpoint, method, newBookmark, oldBookmarks, success, error) {
@@ -62,7 +93,10 @@ var BookmarksIndex = React.createClass({
 
       success: function(data) {
         this.setState({bookmarks: data, errors: {}});
-        success();
+
+        if (typeof(success) != "undefined") {
+          success();
+        }
       }.bind(this),
 
       error: function(xhr, status, err) {
@@ -72,33 +106,36 @@ var BookmarksIndex = React.createClass({
           bookmarks: oldBookmarks,
         });
 
-        error(errors);
+
+        if (typeof(error) != "undefined") {
+          error(errors);
+        }
       }.bind(this),
     });
   },
 
-  handleDelete(bookmarkToDelete) {
-    var bookmarks = this.state.bookmarks;
+  headerSupplement: function() {
+    var headerSupplement;
 
-    var newBookmarks = bookmarks.filter(function(bookmark) {
-      return bookmark.id != bookmarkToDelete.id;
-    });
+    if (typeof(this.props.taggedWith) != "undefined") {
+      headerSupplement = (
+        <span>Tagged with
+          #{this.props.taggedWith}
+        </span>
+      );
+    } else {
+      headerSupplement = (
+        <a
+          href="#"
+          className="button button-green"
+          onClick={this.toggleBookmarkNewFormDisplaying}
+        >
+          Add bookmark
+        </a>
+      );
+    }
 
-    this.setState({bookmarks: newBookmarks});
-
-    $.ajax({
-      url: "/bookmarks/" + bookmarkToDelete.id + ".json",
-      dataType: "json",
-      type: "DELETE",
-
-      success: function(data) {
-        this.setState({bookmarks: data});
-      }.bind(this),
-
-      error: function(xhr, status, err) {
-        this.setState({bookmarks: bookmarks});
-      }.bind(this)
-    });
+    return headerSupplement;
   },
 
   render: function() {
@@ -106,14 +143,9 @@ var BookmarksIndex = React.createClass({
       <div className="container">
         <header className="title">
           <h2>Your Bookmarks</h2>
-
-          <a
-            href="#"
-            className="button button-green right-abs"
-            onClick={this.toggleBookmarkNewFormDisplaying}
-          >
-            Add bookmark
-          </a>
+          <span className="right-abs">
+            {this.headerSupplement()}
+          </span>
         </header>
 
         <BookmarksList

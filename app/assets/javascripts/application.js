@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require react
 //= require react_ujs
+//= require react-tagsinput
 //= require components
