@@ -2,8 +2,7 @@ var BookmarksIndex = React.createClass({
   getInitialState: function() {
     return {
       bookmarks: this.props.bookmarks,
-      bookmarkNewFormDisplaying: false,
-      errors: {}
+      bookmarkNewFormDisplaying: false
     }
   },
 
@@ -13,8 +12,7 @@ var BookmarksIndex = React.createClass({
     }
 
     this.setState({
-      bookmarkNewFormDisplaying: !this.state.bookmarkNewFormDisplaying,
-      errors: {}
+      bookmarkNewFormDisplaying: !this.state.bookmarkNewFormDisplaying
     });
   },
 
@@ -92,7 +90,7 @@ var BookmarksIndex = React.createClass({
       data: newBookmark,
 
       success: function(data) {
-        this.setState({bookmarks: data, errors: {}});
+        this.setState({bookmarks: data});
 
         if (typeof(success) != "undefined") {
           success();
@@ -105,7 +103,6 @@ var BookmarksIndex = React.createClass({
         this.setState({
           bookmarks: oldBookmarks,
         });
-
 
         if (typeof(error) != "undefined") {
           error(errors);
@@ -157,7 +154,6 @@ var BookmarksIndex = React.createClass({
         <BookmarkNewForm
           displaying={this.state.bookmarkNewFormDisplaying}
           toggleDisplaying={this.toggleBookmarkNewFormDisplaying}
-          errors={this.state.errors}
           onSubmit={this.handleNewSubmit}
         />
       </div>
