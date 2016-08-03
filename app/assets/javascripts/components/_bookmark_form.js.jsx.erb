@@ -22,40 +22,26 @@ var BookmarkForm = React.createClass({
     }
   },
 
-  componentDidUpdate: function(prevProps, prevState) {
-    var titleField = this.props.renderedForm().
-      find("#bookmark_title");
+  onKeyUp: function(e) {
+    if (e.which == 27) { // esc
+      this.props.toggleDisplaying(e);
+    }
+  },
 
+  componentDidUpdate: function(prevProps, prevState) {
     if (this.props.displaying != prevProps.displaying) {
       if (this.props.displaying) {
-        titleField.focus();
-
-        // make "Cancel" hide
-        this.props.renderedForm().on(
-          "click",
-          ".cancel",
-          this.props.toggleDisplaying
-        );
-
-        // press esc to hide
-        this.props.renderedForm().on(
-          "keyup",
-
-          function(e) {
-            if (e.which == 27) {
-              this.props.toggleDisplaying(e);
-            }
-          }.bind(this)
-        );
+        this.titleField().focus();
       } else {
         // unbind all the events
-        this.props.renderedForm().off("click", ".cancel");
-        this.props.renderedForm().off("keyup");
-
-        titleField.blur(); // prevent typing on hidden field
+        this.titleField().blur(); // prevent typing on hidden field
         this.setState(this.getInitialState());
       }
     }
+  },
+
+  titleField: function() {
+    return ReactDOM.findDOMNode(this.refs.titleField);
   },
 
   displayingClass: function() {
@@ -108,9 +94,7 @@ var BookmarkForm = React.createClass({
       }.bind(this),
 
       function(errors) {
-        var titleField = this.props.renderedForm().find("#bookmark_title");
-
-        titleField.focus();
+        this.titleField().focus();
         this.setState({errors: errors});
       }.bind(this),
     );
@@ -120,7 +104,7 @@ var BookmarkForm = React.createClass({
   render: function() {
     return(
       <div>
-        <form className={this.displayingClass() + " modal " + this.props.className} onSubmit={this.handleSubmit}>
+        <form className={this.displayingClass() + " modal"} onSubmit={this.handleSubmit} onKeyUp={this.onKeyUp}>
           <h2>{this.props.headerText}</h2>
 
           <section>
@@ -129,7 +113,7 @@ var BookmarkForm = React.createClass({
             </label>
 
             <InputWithErrors errors={this.state.errors.title}>
-              <input type="text" id="bookmark_title" value={this.state.title} onChange={this.handleTitleChange} />
+              <input type="text" id="bookmark_title" value={this.state.title} onChange={this.handleTitleChange} ref="titleField" />
             </InputWithErrors>
           </section>
 
@@ -154,12 +138,12 @@ var BookmarkForm = React.createClass({
           </section>
 
           <section className="controls">
-            <%= link_to "Cancel", :back, className: "cancel" %>
+            <a href="#" onClick={this.props.toggleDisplaying}>Cancel</a>
             <input type="submit" value="Save" className="button button-green" />
           </section>
         </form>
 
-        <div className={this.props.className + " " + this.displayingClass() + " modal-overlay"} />
+        <div className={this.displayingClass() + " modal-overlay"} />
       </div>
     );
   }
