@@ -17,3 +17,4 @@
 //= require react_ujs
 //= require react-tagsinput
 //= require components
+//= require_tree .
