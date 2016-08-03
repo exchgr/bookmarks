@@ -1,0 +1,19 @@
+# Bookmark Manager
+
+Here's a simple bookmark manager written in React and Rails.
+
+## Installation
+### macOS
+#### Application
+    brew install postgres
+    bundle install
+
+#### Database
+    postgres -D /usr/local/var/postgres
+    rake db:migrate
+
+## Running
+    postgres -D /usr/local/var/postgres
+    rails s
+
+Navigate to <http://localhost:3000/> in the browser of your choice.
