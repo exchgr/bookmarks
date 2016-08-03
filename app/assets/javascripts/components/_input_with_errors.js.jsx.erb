@@ -3,25 +3,25 @@ var InputWithErrors = React.createClass({
     return {errors: []};
   },
 
-  render: function() {
-    errorNodes = this.props.errors.map(function(error, index) {
-      return <InputError error={error} key={index} />
-    })
-
-    var field;
-
-    if (this.props.errors.length > 0) {
-      field = (<div className="field_with_errors">
+  field: function() {
+    return this.props.errors.length > 0 ?
+      <div className="field_with_errors">
         {this.props.children}
-      </div>)
-    } else {
-      field = this.props.children;
-    }
+      </div> :
+        this.props.children;
+  },
 
+  errorNodes: function() {
+    return this.props.errors.map(function(error, index) {
+      return <InputError error={error} key={index} />
+    });
+  },
+
+  render: function() {
     return(
       <span>
-        {field}
-        {errorNodes}
+        {this.field()}
+        {this.errorNodes()}
       </span>
     );
   }

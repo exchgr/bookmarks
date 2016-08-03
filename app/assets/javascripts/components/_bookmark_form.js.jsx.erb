@@ -76,6 +76,8 @@ var BookmarkForm = React.createClass({
     var id = this.state.id;
     var title = this.state.title.trim();
     var url = this.state.url.trim();
+
+    // These are both needed. tag_list is for the server, and tags is for the React component.
     var tag_list = this.tagList().join(",");
     var tags = this.state.tags;
 
